@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [PostController::class, 'show'])->name('show');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/create', [PostController::class, 'create'])->name('create');
+
+Route::post('/addPost', [PostController::class, 'addPost'])->name('addPost');
