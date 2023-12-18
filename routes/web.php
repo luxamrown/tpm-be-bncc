@@ -16,4 +16,9 @@ Route::get('/', [PostController::class, 'show'])->name('show');
 
 Route::get('/create', [PostController::class, 'create'])->name('create');
 
+Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
+Route::patch('/update/{id}', [PostController::class, 'updatePost'])->name('updatePost');
+
 Route::post('/addPost', [PostController::class, 'addPost'])->name('addPost');
+
+Route::delete('/delete/{id}', [PostController::class, 'deletePost'])->name('deletePost');

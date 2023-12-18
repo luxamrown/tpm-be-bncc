@@ -47,16 +47,17 @@
       </nav>
 
       <div class="p-5">
-        <h1 class="text-center">Create Post</h1>
-        <form class="mx-auto" style="max-width: 28rem;" action="{{route('addPost')}}" method="POST" enctype="multipart/form-data">
+        <h1 class="text-center">Edit Post</h1>
+        <form class="mx-auto" style="max-width: 28rem;" action="{{route('updatePost', $post-> id)}}" method="POST" enctype="multipart/form-data">
           @csrf
+          @method('patch')
             <div class="form-group mb-4">
-              <textarea required name="content" class="form-control" id="exampleFormControlTextarea1" placeholder="What is happening?!" rows="3"></textarea>
-              <img src="" class="w-100 mx-auto" id="preview" >
+              <textarea required name="content" class="form-control" id="exampleFormControlTextarea1" placeholder="What is happening?!" rows="3">{{$post->content}}</textarea>
+              <img src="{{($post->image != "") ? asset('/storage/image/'.$post->image) : ""}}" class="w-100 mx-auto" id="preview" >
             </div>
 
             <div class="form-group mb-4">
-              <label class="" for="selectImage">Add Image</label>
+              <label class="" for="selectImage">{{($post->image != "") ? "Change Image" :   "Add Image"}}</label>
               <input type="file" class="form-control-file d-none" name="image" id="selectImage">
             </div>
 
@@ -64,19 +65,19 @@
               <label class="w-100" for="inputState">Post as</label>
               <select class="form-select form-control" name="username">
                 @foreach ($users as $user)
-                  <option value="{{$user->id}}">{{$user->username}}</option>
+                  <option {{($user->id == $post->userId) ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
                 @endforeach
               </select>
             </div>
 
             <div class="mb-3 d-none">
-                <input type="text" value="{{rand(1, 255)}}" class="form-control" id="" name="likeCount">
+                <input type="text" value="{{$post->likeCount}}" class="form-control" id="" name="likeCount">
             </div>
             
             <div class="mb-3 d-none">
-                <input type="text" value="{{date('Y-m-d',time())}}" class="form-control" id="" name="timestamp">
+                <input type="text" value="{{$post->timestamp}}" class="form-control" id="" name="timestamp">
             </div>
-            <button type="submit" class="btn btn-primary ">Submit</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
 

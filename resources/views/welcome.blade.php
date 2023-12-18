@@ -54,11 +54,27 @@
     @foreach ($posts as $post)
     <div class="card bg-light mb-3 mx-auto" style="max-width: 24rem;">
         <div class="card-body">
-            <h5 class="card-title">{{$post->user}}</h5>
+            <div class="d-flex ">
+                <h5 class="card-title">{{$post->user->nickname}}</h5>
+                <p class="text-muted mx-2 ">{{$post->user->username}}</p>
+            </div>
             <p class="card-text text-muted" style="font-size: 12px;">{{$post->timestamp}}</p>
             <p class="card-text">{{$post->content}}</p>
+            @if($post->image != "")
+                <img src="{{asset('/storage/image/'.$post->image)}}" class="card-img-top w-100 mx-auto" id="preview">
+            @endif
             <hr/>
             <p class="card-text text-small text-muted" style="font-size: 12px;">{{$post->likeCount}} people liked this post</p>
+
+            <div class="d-flex">
+                <a href="{{route('edit', $post->id)}}" type="button" class="btn btn-outline-primary btn-sm">Edit</a>
+                <form action="{{route('deletePost', $post->id)}}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-outline-danger btn-sm mx-2">Delete</button>
+                </form>
+                {{-- <a href="{{route('deletePost', $post->id)}}" type="button" class="btn btn-outline-danger btn-sm">Delete</a> --}}
+            </div>
         </div>
     </div>
 
